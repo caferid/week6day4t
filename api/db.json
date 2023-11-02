@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "description": "ooooo badferiddikdaban",
+      "name": "ASDSAD",
+      "id": 1
+    },
+    {
+      "description": "ooooo bad",
+      "name": "ASDSAD",
+      "id": 2
+    },
+    {
+      "description": "aKIF qaragullu",
+      "name": "ASDSAD",
+      "id": 3
+    },
+    {
+      "description": "aKIF qaragomruk",
+      "name": "ASDSAD",
+      "id": 4
+    }
+  ],
+  "product": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "comments": {
+    "name": "typicode"
+  }
+}

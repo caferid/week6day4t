@@ -1,0 +1,105 @@
+const baseUrl = "http://localhost:3000/users"
+const dataTable = document.getElementById('data-table')
+
+
+async function fetchData() {
+    try {
+        const response = await axios.get(baseUrl)
+        addTable(response.data)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+async function showPost() {
+    let showbnt = document.getElementById('showbtn')
+
+    showbnt.addEventListener('click', () => {
+
+        function response(data) {
+            dataTable.innerHTML = ''
+            data.forEach(item => {
+                const row = document.createElement('tr')
+                row.innerHTML = `
+       
+            <td>${item.id}</td>
+            <td>${item.description}</td>
+            <td>${item.name}</td>
+            <td>
+            <button onclick="editPost(${item.id})">Edit</button>
+            <button onclick="deletePost(${item.id})">Delete</button>
+        </td>
+        `
+                dataTable.appendChild(row)
+            });
+
+        }
+    })
+
+}
+
+async function createPost() {
+    const descriptionInput = document.getElementById('desc-input').value
+    const nameInput = document.getElementById('name-input').value
+    try {
+
+        await axios.post(baseUrl, {
+
+            description: descriptionInput,
+            name: nameInput
+        })
+        fetchData()
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+let editPosdId = null
+
+async function editPost(postId) {
+
+    try {
+        const response = await axios.get(`${baseUrl}/${postId}`)
+
+        const post = response.data
+
+        document.getElementById('desc-input').value = post.description
+        document.getElementById('name-input').value = post.name
+
+        editPosdId = postId
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function updatePost() {
+    const descriptionInput = document.getElementById('desc-input').value
+    const nameInput = document.getElementById('name-input').value
+    if (editPosdId) {
+        try {
+            await axios.put(`${baseUrl}/${editPosdId}`, {
+                description: descriptionInput,
+                name: nameInput
+            })
+            fetchData()
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+}
+
+
+async function deletePost(postId) {
+    try {
+
+        await axios.delete(`${baseUrl}/${postId}`)
+        fetchData()
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+fetchData()
